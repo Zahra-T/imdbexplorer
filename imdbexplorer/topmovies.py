@@ -15,9 +15,10 @@ for movie in movies:
     title = header.find('a')
     link = title['href']
     description = movie.find('p', class_='')
-
+    ratingstar = movie.find('div', class_='ipl-rating-widget').find('span', class_='ipl-rating-star__rating')
 
     print(f'{index.text}{title.text}')
+    print(f'Star: {ratingstar.text}')
     print(f'Description:{description.text}')
     print(f'imdb page:{imdburl}{link}')
     print()
