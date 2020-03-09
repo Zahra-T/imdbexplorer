@@ -53,12 +53,14 @@ def filter(movies, filterattr, info):
     filtered = None
     if(filterattr == 'genre'):
         filtered = [m for m in movies if  set(info).issubset({item.lower() for item in getattr(m, filterattr)})]
+    if(filterattr == 'director'):
+        filtered = [m for m in movies if getattr(m, filterattr).lower() == info.lower()]
 
     return filtered
 
 movies = topmovies()
 
-filtered = filter(movies, 'genre', {'drama'})
+filtered = filter(movies, 'director', 'frank darabont')
 print(filtered)
 printmovies(filtered)
 
