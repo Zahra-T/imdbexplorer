@@ -30,11 +30,11 @@ def topmovies():
 
 
         rate = movie_elem.find('div', class_='ipl-rating-widget').find('span', class_='ipl-rating-star__rating')
-        movie = Movie(title=title.text, 
-                director=director.text, 
+        movie = Movie(title=title.text.strip(), 
+                director=director.text.strip(), 
                 genre=genre.text.strip().split(', '),
-                rate=rate.text, 
-                description=description.text)
+                rate=float(rate.text.strip()), 
+                description=description.text.strip())
 
         movie.setindex(index.text)
         movie.setlink(imdburl+link)
@@ -52,15 +52,17 @@ def filter(movies, filterattr, info):
     #filterattr -> string type of Move class attribute that we want to filter base on that
     filtered = None
     if(filterattr == 'genre'):
-        filtered = [m for m in movies if  set(info).issubset({item.lower() for item in getattr(m, filterattr)})]
+        filtered = [m for m in movies if  set(info).issubset({item.lower() for item in m.genre})]
     if(filterattr == 'director'):
-        filtered = [m for m in movies if getattr(m, filterattr).lower() == info.lower()]
-
+        filtered = [m for m in movies if m.director.lower() == info.lower()]
+    if(filterattr == 'rate'):#info : a tuple defines start and end of range
+        filtered = [m for m in movies if m.rate >= info[0] and m.rate <= info[1]]
     return filtered
 
 movies = topmovies()
 
-filtered = filter(movies, 'director', 'frank darabont')
+
+filtered = filter(movies, 'rate', (9, 9))
 print(filtered)
 printmovies(filtered)
 
