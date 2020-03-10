@@ -61,7 +61,11 @@ def filter(movies, filterattr, info):
     #filterattr -> string type of Move class attribute that we want to filter base on that
     filtered = None
     if(filterattr == 'genre'):
-        filtered = [m for m in movies if  set(info).issubset({item.lower() for item in m.genre})]
+        infoset = {item.lower() for item in info}
+        filtered = [m for m in movies if  infoset.issubset({item.lower() for item in m.genre})]
+    if(filterattr == 'stars'):
+        infoset = {item.lower() for item in info}
+        filtered = [m for m in movies if infoset.issubset({item.lower() for item in m.stars})]
     if(filterattr == 'director'):
         filtered = [m for m in movies if m.director.lower() == info.lower()]
     if(filterattr == 'rate'):#info : a tuple defines start and end of range
@@ -74,7 +78,7 @@ def filter(movies, filterattr, info):
 
 movies = topmovies()
 #print(printmovies(movies))
-filtered = filter(movies, 'duration', (0, 90))
+filtered = filter(movies, 'genre', ['Action', 'Drama'])
 print(filtered)
 printmovies(filtered)
 
