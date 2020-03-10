@@ -68,11 +68,13 @@ def filter(movies, filterattr, info):
         filtered = [m for m in movies if m.rate >= info[0] and m.rate <= info[1]]
     if(filterattr == 'year'):
         filtered = [m for m in movies if m.year >= info[0] and m.year <=info[1]]
+    if(filterattr == 'duration'):
+        filtered = [m for m in movies if m.duration >= info[0] and m.duration <= info[1]]
     return filtered
 
 movies = topmovies()
 #print(printmovies(movies))
-filtered = filter(movies, 'year', (1990, 2000))
+filtered = filter(movies, 'duration', (0, 90))
 print(filtered)
 printmovies(filtered)
 
