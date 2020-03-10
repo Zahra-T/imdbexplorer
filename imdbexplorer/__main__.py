@@ -28,12 +28,17 @@ def topmovies():
         moreinfo = movie_elem.find_all('p', class_='text-muted text-small')
         genre = moreinfo[0].find('span', class_='genre')
         director = moreinfo[1].find('a')
-
+        stars = moreinfo[1].find_all('a')[1:-1]
+        starlist = []
+        for star_elem in stars:
+            starlist.append(star_elem.text.strip())
 
         rate = movie_elem.find('div', class_='ipl-rating-widget').find('span', class_='ipl-rating-star__rating')
+        
         movie = Movie(title=title.text.strip(),
                 year=int(year.text.strip()[1:-1]),
-                director=director.text.strip(), 
+                director=director.text.strip(),
+                stars = starlist,
                 genre=genre.text.strip().split(', '),
                 rate=float(rate.text.strip()), 
                 description=description.text.strip())
