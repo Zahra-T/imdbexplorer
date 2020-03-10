@@ -14,11 +14,12 @@ def topmovies():
     movies = []
 
     for movie_elem in movies_content:
-        header = movie_elem.find('h3')
+        header = movie_elem.find('h3', class_='lister-item-header')
 
         index = header.find('span', class_='lister-item-index unbold text-primary')
 
         title = header.find('a')
+        year = header.find('span', class_='lister-item-year')
 
         link = title['href']
 
@@ -30,7 +31,8 @@ def topmovies():
 
 
         rate = movie_elem.find('div', class_='ipl-rating-widget').find('span', class_='ipl-rating-star__rating')
-        movie = Movie(title=title.text.strip(), 
+        movie = Movie(title=title.text.strip(),
+                year=int(year.text.strip()[1:-1]),
                 director=director.text.strip(), 
                 genre=genre.text.strip().split(', '),
                 rate=float(rate.text.strip()), 
@@ -60,10 +62,9 @@ def filter(movies, filterattr, info):
     return filtered
 
 movies = topmovies()
-
-
+print(printmovies(movies))
 filtered = filter(movies, 'rate', (9, 9))
-print(filtered)
+#print(filtered)
 printmovies(filtered)
 
 
