@@ -27,6 +27,7 @@ def topmovies():
 
         moreinfo = movie_elem.find_all('p', class_='text-muted text-small')
         genre = moreinfo[0].find('span', class_='genre')
+        duration = moreinfo[0].find('span', class_='runtime')
         director = moreinfo[1].find('a')
         stars = moreinfo[1].find_all('a')[1:-1]
         starlist = []
@@ -40,6 +41,7 @@ def topmovies():
                 director=director.text.strip(),
                 stars = starlist,
                 genre=genre.text.strip().split(', '),
+                duration=int(duration.text.strip()[0:-4]),
                 rate=float(rate.text.strip()), 
                 description=description.text.strip())
 
