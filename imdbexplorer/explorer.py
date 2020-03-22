@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from movie import Movie
 
-def topmovies():
+def topmovies(count=None):
     imdburl = 'https://www.imdb.com'
     url = 'https://www.imdb.com/list/ls068082370/?sort=user_rating,desc&st_dt=&mode=detail&pa0ge=1'
     page = requests.get(url)
@@ -49,12 +49,10 @@ def topmovies():
         movie.setlink(imdburl+link)
         movies.append(movie)
 
-    return movies
+        len = count if count < len(movies) else len(movies)
 
+    return movies[:len]
 
-def printmovies(movies):
-    for movie in movies:
-        movie.print()
 
 def filter(movies, filterattr, info): 
     #movies -> list of the movies we want to filter
