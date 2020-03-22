@@ -65,7 +65,7 @@ def filter(movies, filterattr, info):
     if(filterattr == 'genre'):
         infoset = {item.lower() for item in info}
         filtered = [m for m in movies if  infoset.issubset({item.lower() for item in m.genre})]
-    if(filterattr == 'stars'):
+    if(filterattr == 'star'):
         infoset = {item.lower() for item in info}
         filtered = [m for m in movies if infoset.issubset({item.lower() for item in m.stars})]
     if(filterattr == 'director'):

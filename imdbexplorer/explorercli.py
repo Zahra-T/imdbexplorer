@@ -31,7 +31,14 @@ class Top(easycli.SubCommand):
                 type=str,
                 action='store',
                 help='Director of the movies'
+            ),
+            easycli.Argument(
+                '-s', '--star',
+                type=str,
+                action='append',
+                help='The star who have acted in the movie'
             )
+
     ]
 
 
@@ -43,6 +50,8 @@ class Top(easycli.SubCommand):
             movies = explorer.filter(movies, 'genre', args.genre)
         if args.director:
             movies = explorer.filter(movies, 'director', args.director)
+        if args.star:
+            movies = explorer.filter(movies, 'star', args.star)
 
         movies = movies[:min(args.count, len(movies))]
 
