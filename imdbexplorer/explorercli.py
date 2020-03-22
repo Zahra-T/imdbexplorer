@@ -10,6 +10,7 @@ class Top(easycli.SubCommand):
     __arguments__ = [
             easycli.Argument(
                 'count',
+                type=int,
                 default=250,
                 help='Maximum number of movies to be shown'
             )

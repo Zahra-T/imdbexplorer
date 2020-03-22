@@ -1,10 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from movie import Movie
+import re
+
 
 def topmovies(count=None):
     imdburl = 'https://www.imdb.com'
-    url = 'https://www.imdb.com/list/ls068082370/?sort=user_rating,desc&st_dt=&mode=detail&pa0ge=1'
+    url = 'https://www.imdb.com/list/ls068082370/'
     page = requests.get(url)
 
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -19,7 +21,12 @@ def topmovies(count=None):
         index = header.find('span', class_='lister-item-index unbold text-primary')
 
         title = header.find('a')
-        year = header.find('span', class_='lister-item-year')
+        yearobject = header.find('span', class_='lister-item-year')
+        yearpattern = re.compile(r'(\d{4})')
+        yearsearch = yearpattern.search(yearobject.text)
+        yearnum = None
+        if yearsearch:
+            yearnum = int(yearsearch.group(0))
 
         link = title['href']
 
@@ -37,7 +44,7 @@ def topmovies(count=None):
         rate = movie_elem.find('div', class_='ipl-rating-widget').find('span', class_='ipl-rating-star__rating')
         
         movie = Movie(title=title.text.strip(),
-                year=int(year.text.strip()[1:-1]),
+                year=yearnum,
                 director=director.text.strip(),
                 stars = starlist,
                 genre=genre.text.strip().split(', '),
@@ -49,9 +56,10 @@ def topmovies(count=None):
         movie.setlink(imdburl+link)
         movies.append(movie)
 
-        len = count if count < len(movies) else len(movies)
+        if count:
+            length = count if count < len(movies) else len(movies)
 
-    return movies[:len]
+    return movies[:length]
 
 
 def filter(movies, filterattr, info): 
