@@ -1,10 +1,27 @@
 import easycli
-
+import explorer
 
 __version__ = '0.1.0'
 
 
-class Explorer:
+class Top(easycli.SubCommand):
+    __command__ = 'top'
+    __aliases__ = ['t']
+    __arguments__ = [
+            easycli.Argument(
+                'count',
+                default=250,
+                help='Maximum number of movies to be shown'
+            )
+    ]
+
+    def __call__(self, args):
+        for movie in explorer.topmovies(count=args.count):
+            movie.print()
+
+
+
+class Explorer(easycli.Root):
     __help__ = 'Easy imdb explorer'
     __arguments__ = [
             easycli.Argument(
