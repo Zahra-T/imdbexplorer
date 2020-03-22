@@ -5,6 +5,11 @@ import re
 
 
 def topmovies():
+    '''
+        A web scraper to extract top movies information out of imdb website
+        and create movie objects and return a list of movies
+    '''
+
     imdburl = 'https://www.imdb.com'
     url = 'https://www.imdb.com/list/ls068082370/'
     page = requests.get(url)
@@ -60,7 +65,24 @@ def topmovies():
     return movies
 
 
-def filter(movies, filterattr, info): 
+def filter(movies, filterattr, info):
+    '''
+    A method to filter a movie list by movie attributes
+
+    Args:
+        movies: a list of movie objects in type of Movie class
+
+        filterattr: a string that defines movies have to be filtered by which of the attributes of movie object
+
+        info: more info for filter the movies list
+                for genre: a list of genres
+                for star: a list of star names
+                for derector: the name of director of the movie
+                for rate: a tuple of two integers that defines the range of rate attribute
+                for duration: a tuple of two integers that defines the range of duration attribute in minutes
+
+    '''
+
     filtered = None
     if(filterattr == 'genre'):
         infoset = {item.lower() for item in info}
