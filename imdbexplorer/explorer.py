@@ -76,10 +76,5 @@ def filter(movies, filterattr, info):
         filtered = [m for m in movies if m.duration >= info[0] and m.duration <= info[1]]
     return filtered
 
-movies = topmovies()
-#print(printmovies(movies))
-filtered = filter(movies, 'genre', ['Action', 'Drama'])
-print(filtered)
-printmovies(filtered)
 
 
