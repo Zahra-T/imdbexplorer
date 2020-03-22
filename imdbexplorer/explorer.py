@@ -4,7 +4,7 @@ from movie import Movie
 import re
 
 
-def topmovies(count=None):
+def topmovies():
     imdburl = 'https://www.imdb.com'
     url = 'https://www.imdb.com/list/ls068082370/'
     page = requests.get(url)
@@ -56,15 +56,11 @@ def topmovies(count=None):
         movie.setlink(imdburl+link)
         movies.append(movie)
 
-        if count:
-            length = count if count < len(movies) else len(movies)
 
-    return movies[:length]
+    return movies
 
 
 def filter(movies, filterattr, info): 
-    #movies -> list of the movies we want to filter
-    #filterattr -> string type of Move class attribute that we want to filter base on that
     filtered = None
     if(filterattr == 'genre'):
         infoset = {item.lower() for item in info}
@@ -77,7 +73,7 @@ def filter(movies, filterattr, info):
     if(filterattr == 'rate'):#info : a tuple defines start and end of range
         filtered = [m for m in movies if m.rate >= info[0] and m.rate <= info[1]]
     if(filterattr == 'year'):
-        filtered = [m for m in movies if m.year >= info[0] and m.year <=info[1]]
+        filtered = [m for m in movies if m.year in info]
     if(filterattr == 'duration'):
         filtered = [m for m in movies if m.duration >= info[0] and m.duration <= info[1]]
     return filtered

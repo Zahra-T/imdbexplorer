@@ -9,17 +9,28 @@ class Top(easycli.SubCommand):
     __aliases__ = ['t']
     __arguments__ = [
             easycli.Argument(
-                'count',
+                '-c', '--count',
                 type=int,
                 default=250,
                 help='Maximum number of movies to be shown'
+            ),
+            easycli.Argument(
+                '-y', '--year',
+                type=int,
+                action='append',
+                help='Production year of the movies'
             )
     ]
 
-    def __call__(self, args):
-        for movie in explorer.topmovies(count=args.count):
-            movie.print()
 
+    def __call__(self, args):
+        movies = explorer.topmovies()
+        if args.year:
+            movies = explorer.filter(movies, 'year', args.year)
+        movies = movies[:min(args.count, len(movies))]
+
+        for movie in movies:
+            movie.print()
 
 
 class Explorer(easycli.Root):
