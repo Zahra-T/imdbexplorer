@@ -29,6 +29,7 @@ class Explorer(easycli.Root):
                 action='store_true',
                 help='Show version'
             ),
+            Top
         ]
 
     def __call__(self, args):
