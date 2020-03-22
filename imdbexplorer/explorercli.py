@@ -25,6 +25,12 @@ class Top(easycli.SubCommand):
                 type=str,
                 action='append',
                 help='Genre of the movies'
+            ),
+            easycli.Argument(
+                '-d', '--director',
+                type=str,
+                action='store',
+                help='Director of the movies'
             )
     ]
 
@@ -35,6 +41,9 @@ class Top(easycli.SubCommand):
             movies = explorer.filter(movies, 'year', args.year)
         if args.genre:
             movies = explorer.filter(movies, 'genre', args.genre)
+        if args.director:
+            movies = explorer.filter(movies, 'director', args.director)
+
         movies = movies[:min(args.count, len(movies))]
 
         for movie in movies:
