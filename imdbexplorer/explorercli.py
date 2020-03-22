@@ -19,6 +19,12 @@ class Top(easycli.SubCommand):
                 type=int,
                 action='append',
                 help='Production year of the movies'
+            ),
+            easycli.Argument(
+                '-g', '--genre',
+                type=str,
+                action='append',
+                help='Genre of the movies'
             )
     ]
 
@@ -27,6 +33,8 @@ class Top(easycli.SubCommand):
         movies = explorer.topmovies()
         if args.year:
             movies = explorer.filter(movies, 'year', args.year)
+        if args.genre:
+            movies = explorer.filter(movies, 'genre', args.genre)
         movies = movies[:min(args.count, len(movies))]
 
         for movie in movies:
