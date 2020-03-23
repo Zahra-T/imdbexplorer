@@ -1,6 +1,6 @@
 # imdbexplorer
 
-A web scraper to extract movie information out of imdb website and 
+A web scraper to extract movie information out of imdb website
 and show them in terminal.
 also you can filter them by specific movie attributes.
 
