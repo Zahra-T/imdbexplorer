@@ -7,6 +7,7 @@ also you can filter them by specific movie attributes.
 ### Installation
 ```
 pip3 install .
+imdb completion install
 ```
 
 ### Usage
