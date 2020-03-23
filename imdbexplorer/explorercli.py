@@ -61,6 +61,7 @@ class Top(easycli.SubCommand):
 
 class Explorer(easycli.Root):
     __help__ = 'Easy imdb explorer'
+    __completion__ = True
     __arguments__ = [
             easycli.Argument(
                 '-v', '--version',
